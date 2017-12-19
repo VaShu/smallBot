@@ -1,0 +1,6 @@
+.ipynb_checkpoints
+.idea
+.save
+tflearn_logs
+benv
+task.txt
