@@ -1,5 +1,6 @@
 # things we need for NLP
 import nltk
+import os
 from nltk.stem.lancaster import LancasterStemmer
 
 stemmer = LancasterStemmer()
@@ -91,6 +92,22 @@ model = tflearn.DNN(net, tensorboard_dir='tflearn_logs')
 # Start training (apply gradient descent algorithm)
 model.fit(train_x, train_y, n_epoch=1000, batch_size=8, show_metric=True)
 model.save('model.tflearn')
+
+export_dir = os.path.abspath(os.curdir)
+from tensorflow.python.saved_model.builder_impl import SavedModelBuilder
+builder = SavedModelBuilder(export_dir)
+with tf.Session(graph=tf.Graph()) as sess:
+  builder.add_meta_graph_and_variables(sess,
+                                       [tf.saved_model.tag_constants.TRAINING],
+                                       signature_def_map=tf.saved_model.signature_constants
+#                                       assets_collection=tf.saved_model.a
+                                       )
+# Add a second MetaGraphDef for inference.
+with tf.Session(graph=tf.Graph()) as sess:
+  builder.add_meta_graph([tf.saved_model.tag_constants.TRAINING])
+builder.save()
+
+
 
 # save all of our data structures
 

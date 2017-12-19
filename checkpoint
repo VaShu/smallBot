@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/vadim/pypro/smallBot/model.tflearn"
+all_model_checkpoint_paths: "/home/vadim/pypro/smallBot/model.tflearn"

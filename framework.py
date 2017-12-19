@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import tflearn
 import tensorflow as tf
@@ -12,6 +13,18 @@ words = data['words']
 classes = data['classes']
 train_x = data['train_x']
 train_y = data['train_y']
+
+model_dir = os.path.abspath(os.curdir)
+#       Initialize graph and session, load saved model
+#        :param model_dir: directory contained exported GAN model
+# load saved model
+with tf.Session(graph=tf.Graph()) as sess:
+    kwargs = {'model.tflearn'}
+    model = tf.saved_model.loader.load(
+    sess,
+    [tf.saved_model.tag_constants.TRAINING],
+    model_dir)
+
 
 # import our chat-bot intents file
 
